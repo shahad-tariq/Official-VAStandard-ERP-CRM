@@ -212,6 +212,38 @@
     white-space: nowrap;
 }
 
+.vas-inv-status-chip.is-overdue,
+.vas-dup-pill.is-danger {
+    background: #FAD7D7;
+    color: #8F2D2D;
+}
+
+.vas-inv-status-chip.is-due-soon,
+.vas-inv-status-chip.is-email-pending,
+.vas-dup-pill.is-warning {
+    background: #FCEFC7;
+    color: #9A6500;
+}
+
+.vas-inv-status-chip.is-sent,
+.vas-dup-pill.is-info {
+    background: #D9ECFF;
+    color: #0E5DA8;
+}
+
+.vas-inv-status-chip.is-email-sent,
+.vas-dup-pill.is-success {
+    background: #CCEFDD;
+    color: #0C5D38;
+}
+
+.vas-inv-status-chip.is-default,
+.vas-dup-pill.is-draft,
+.vas-dup-pill.is-default {
+    background: #EDEDED;
+    color: #505050;
+}
+
 .vas-inv-cell-amount {
     font-size: 0.75em;
     font-weight: 700;

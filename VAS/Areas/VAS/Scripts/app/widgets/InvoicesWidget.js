@@ -108,31 +108,31 @@
         /* Attention-status chips (keyed by the backend attention_status text), per design.md §8.
            These are distinct from the document-status codes in STATUS_CONFIG below. */
         var ATTENTION_STATUS = {
-            'Overdue': { key: 'VIS_Overdue', fallback: 'Overdue', bg: '#FAD7D7', color: '#8F2D2D' },
-            'Due soon': { key: 'VIS_DueSoon', fallback: 'Due soon', bg: '#FCEFC7', color: '#9A6500' },
-            'Sent': { key: 'VIS_Sent', fallback: 'Sent', bg: '#D9ECFF', color: '#0E5DA8' }
+            'Overdue': { key: 'VIS_Overdue', fallback: 'Overdue', cls: 'is-overdue' },
+            'Due soon': { key: 'VIS_DueSoon', fallback: 'Due soon', cls: 'is-due-soon' },
+            'Sent': { key: 'VIS_Sent', fallback: 'Sent', cls: 'is-sent' }
         };
 
         /* Email-state chips for the 'Sent' category: completed invoices now appear whether or not the
            invoice e-mail has gone out. 'Y' = already e-mailed (done, green); otherwise the e-mail is
            still pending (amber, needs action). */
         var SENT_EMAIL_STATUS = {
-            'Y': { key: 'VIS_EmailSent', fallback: 'Email sent', bg: '#CCEFDD', color: '#0C5D38' },
-            'N': { key: 'VIS_EmailNotSent', fallback: 'Not sent', bg: '#FCEFC7', color: '#9A6500' }
+            'Y': { key: 'VIS_EmailSent', fallback: 'Email sent', cls: 'is-email-sent' },
+            'N': { key: 'VIS_EmailNotSent', fallback: 'Not sent', cls: 'is-email-pending' }
         };
 
         var STATUS_CONFIG = {
-            DR: { label: lbl("VIS_StatusDraft", 'Draft'), bg: '#EDEDED', color: '#505050' },
-            IP: { label: lbl("VIS_StatusInProgress", 'In Progress'), bg: '#FFF3CD', color: '#9A6500' },
-            CO: { label: lbl("VIS_StatusCompleted", 'Completed'), bg: '#CCEFDD', color: '#0C5D38' },
-            CL: { label: lbl("VIS_StatusClosed", 'Closed'), bg: '#DFF1FF', color: '#0E5DA8' },
-            AP: { label: lbl("VIS_StatusApproved", 'Approved'), bg: '#CCEFDD', color: '#0C5D38' },
-            NA: { label: lbl("VIS_StatusNotApproved", 'Not Approved'), bg: '#FFE8E8', color: '#C0392B' },
-            WP: { label: lbl("VIS_StatusWaitingPayment", 'Waiting Payment'), bg: '#FFF3CD', color: '#9A6500' },
-            WC: { label: lbl("VIS_StatusWaitingConfirm", 'Waiting Confirm'), bg: '#FFF3CD', color: '#9A6500' },
-            RE: { label: lbl("VIS_StatusReversed", 'Reversed'), bg: '#FFE8E8', color: '#C0392B' },
-            VO: { label: lbl("VIS_StatusVoided", 'Voided'), bg: '#FFE8E8', color: '#C0392B' },
-            IN: { label: lbl("VIS_StatusInvalid", 'Invalid'), bg: '#FFE8E8', color: '#C0392B' }
+            DR: { label: lbl("VIS_StatusDraft", 'Draft'), cls: 'is-draft' },
+            IP: { label: lbl("VIS_StatusInProgress", 'In Progress'), cls: 'is-warning' },
+            CO: { label: lbl("VIS_StatusCompleted", 'Completed'), cls: 'is-success' },
+            CL: { label: lbl("VIS_StatusClosed", 'Closed'), cls: 'is-info' },
+            AP: { label: lbl("VIS_StatusApproved", 'Approved'), cls: 'is-success' },
+            NA: { label: lbl("VIS_StatusNotApproved", 'Not Approved'), cls: 'is-danger' },
+            WP: { label: lbl("VIS_StatusWaitingPayment", 'Waiting Payment'), cls: 'is-warning' },
+            WC: { label: lbl("VIS_StatusWaitingConfirm", 'Waiting Confirm'), cls: 'is-warning' },
+            RE: { label: lbl("VIS_StatusReversed", 'Reversed'), cls: 'is-danger' },
+            VO: { label: lbl("VIS_StatusVoided", 'Voided'), cls: 'is-danger' },
+            IN: { label: lbl("VIS_StatusInvalid", 'Invalid'), cls: 'is-danger' }
         };
 
         /* ── Initialize ── */
@@ -372,10 +372,10 @@
         function statusChip(inv) {
             if (inv.status === 'Sent') {
                 var es = SENT_EMAIL_STATUS[inv.emailSent === 'Y' ? 'Y' : 'N'];
-                return { label: lbl(es.key, es.fallback), bg: es.bg, color: es.color };
+                return { label: lbl(es.key, es.fallback), cls: es.cls };
             }
-            var cfg = ATTENTION_STATUS[inv.status] || { bg: '#EDEDED', color: '#505050' };
-            return { label: statusLabel(inv), bg: cfg.bg, color: cfg.color };
+            var cfg = ATTENTION_STATUS[inv.status] || { cls: 'is-default' };
+            return { label: statusLabel(inv), cls: cfg.cls };
         }
 
         /* ── Render rows ── */
@@ -402,8 +402,7 @@
                     '<span class="vas-inv-cell-customer" title="' + safeCustomer + '">' + safeCustomer + '</span>' +
                     '<span class="vas-inv-cell-due">' + formatDue(inv.due) + '</span>' +
                     '<span>' +
-                    '<span class="vas-inv-status-chip" style="' +
-                    'background:' + chip.bg + ';color:' + chip.color + ';">' +
+                    '<span class="vas-inv-status-chip ' + chip.cls + '">' +
                     escapeHtml(chip.label) +
                     '</span>' +
                     '</span>' +
@@ -595,8 +594,8 @@
 
         /* Status chip — reuses the row STATUS_CONFIG colours. */
         function statusPill(code) {
-            var cfg = STATUS_CONFIG[code] || { label: code || '—', bg: '#EDEDED', color: '#505050' };
-            return '<span class="vas-dup-pill" style="background:' + cfg.bg + ';color:' + cfg.color + ';">' + escapeHtml(cfg.label) + '</span>';
+            var cfg = STATUS_CONFIG[code] || { label: code || '—', cls: 'is-default' };
+            return '<span class="vas-dup-pill ' + cfg.cls + '">' + escapeHtml(cfg.label) + '</span>';
         }
 
         /* Field row with an optional match/diff dot: 'match' (green) or 'diff' (red). The value sits in
