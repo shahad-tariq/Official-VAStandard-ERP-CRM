@@ -9,26 +9,35 @@
 .vas-adtp-root {
     width: 100%;
     height: 100%;
+    min-width: 0;
+    min-height: 0;
     container-type: inline-size;
     font-family: Roboto, sans-serif;
+    font-size: 1em;
+    overflow: hidden;
 }
 
+    .vas-adtp-root,
+    .vas-adtp-root * {
+        box-sizing: border-box;
+    }
+
 .vas-adtp-card {
-    /* Base unit: every inner size below is expressed in em of this value. */
-    font-size: 16px;
-    box-sizing: border-box;
+    font-size: 1em;
     width: 100%;
     height: 100%;
+    min-width: 0;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     /* Glass widget surface (design.md §8) */
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.58) 100%);
-    border: 2px solid #fff;
-    border-radius: 0.875em;          /* 14px */
+    border: 0.125em solid #fff;
+    border-radius: 1.15em;
     box-shadow: 0 0.625em 1.5em rgba(15, 61, 97, 0.06);
     /* Widget edge spacing: top 16 / right 16 / bottom 18 / left 16 */
-    padding: 1em 1em 1.125em;
+    padding: 1em;
     overflow: hidden;
 }
 
@@ -36,15 +45,16 @@
 .vas-adtp-header {
     display: flex;
     align-items: center;
-    gap: 0.625em;                    /* 10px */
-    margin-bottom: 0.625em;
+    gap: 0.6em;
+    margin-bottom: 0.6em;
+    min-width: 0;
 }
 
 .vas-adtp-icon {
-    width: 2.25em;                   /* 36px */
+    width: 2.25em;
     height: 2.25em;
     flex-shrink: 0;
-    border-radius: 0.5em;            /* 8px */
+    border-radius: 0.75em;
     background: #DFF1FF;             /* pale info/primary tint */
     color: #0083DA;                  /* drives the currentColor SVG stroke */
     display: flex;
@@ -53,12 +63,12 @@
 }
 
 .vas-adtp-icon svg {
-    width: 1em;                      /* 16px, overrides inline attrs, scales with base */
-    height: 1em;
+    width: 1.15em;
+    height: 1.15em;
 }
 
 .vas-adtp-title {
-    font-size: 0.8125em;             /* 13px */
+    font-size: 0.95em;
     font-weight: 600;
     color: #102C3F;
     line-height: 1.3;
@@ -74,21 +84,21 @@
 }
 
 .vas-adtp-metric-val {
-    font-size: 2.5em;                /* 40px */
+    font-size: clamp(1.4em, 8vw, 2.4em);
     font-weight: 700;
     color: #102C3F;
     line-height: 1;
 }
 
 .vas-adtp-metric-suffix {
-    font-size: 1.25em;               /* 20px */
+    font-size: 1em;
     color: #748494;
     margin-inline-start: 0.1em;
 }
 
 /* ── Subtitle: comparison vs last quarter ── */
 .vas-adtp-subtitle {
-    font-size: 0.6875em;             /* 11px */
+    font-size: 0.75em;
     color: #748494;
     margin-top: auto;
     line-height: 1.4;
@@ -96,10 +106,10 @@
 
 /* ── Responsive: shrink the whole card by lowering its base font-size on
  *    narrow dashboard cells. Inner em sizing scales automatically. ── */
-@container (max-width: 300px) {
-    .vas-adtp-card { font-size: 13px; }
+@container (max-width: 18.75em) {
+    .vas-adtp-card { padding: 0.75em; }
 }
 
-@container (max-width: 220px) {
-    .vas-adtp-card { font-size: 11px; }
+@container (max-width: 13.75em) {
+    .vas-adtp-header { gap: 0.45em; }
 }

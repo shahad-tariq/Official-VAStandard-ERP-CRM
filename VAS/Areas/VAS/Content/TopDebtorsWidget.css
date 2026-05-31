@@ -11,14 +11,20 @@
 .vas-td-root {
     width: 100%;
     height: 100%;
+    min-width: 0;
+    min-height: 0;
     container-type: inline-size;
     font-family: Roboto, sans-serif;
-    /* Positioning context for the absolute busy overlay below. */
+    font-size: 1em;
     position: relative;
+    overflow: hidden;
 }
 
-/* Busy/loading overlay over the card while data is fetched (initial load + refresh);
-   the inner spinner uses the core busy-indicator classes. */
+    .vas-td-root,
+    .vas-td-root * {
+        box-sizing: border-box;
+    }
+
 .vas-td-busy {
     position: absolute;
     inset: 0;
@@ -26,22 +32,22 @@
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.55);
-    border-radius: 14px;
+    border-radius: 1.15em;
     z-index: 999;
 }
 
 .vas-td-card {
-    /* Base unit: every em below is relative to this value. */
-    font-size: 16px;
-    box-sizing: border-box;
+    font-size: 1em;
     width: 100%;
     height: 100%;
+    min-width: 0;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     /* Glass widget surface (design.md §8) */
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.58) 100%);
-    border: 2px solid #fff;
-    border-radius: 0.875em;          /* 14px */
+    border: 0.125em solid #fff;
+    border-radius: 1.15em;
     box-shadow: 0 0.625em 1.5em rgba(15, 61, 97, 0.06);
     overflow: hidden;
 }
@@ -51,24 +57,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.5em;
-    /* Widget edge spacing: top 16 / sides 18 / 12 above the list */
-    padding: 1em 1.125em 0.75em;
+    gap: 0.6em;
+    padding: 1em;
     flex-shrink: 0;
 }
 
 .vas-td-header-left {
     display: flex;
     align-items: center;
-    gap: 0.625em;                    /* 10px */
+    gap: 0.6em;
     min-width: 0;
 }
 
 .vas-td-icon {
-    width: 2.25em;                   /* 36px */
+    width: 2.25em;
     height: 2.25em;
     flex-shrink: 0;
-    border-radius: 0.5em;            /* 8px */
+    border-radius: 0.75em;
     background: #EAF8FF;             /* light active blue surface */
     display: flex;
     align-items: center;
@@ -76,19 +81,19 @@
 }
 
 .vas-td-icon svg {
-    width: 1.125em;                  /* 18px */
-    height: 1.125em;
+    width: 1.15em;
+    height: 1.15em;
 }
 
 .vas-td-title {
-    font-size: 0.875em;              /* 14px */
+    font-size: 0.95em;
     font-weight: 700;
     color: #102C3F;
     line-height: 1.2;
 }
 
 .vas-td-subtitle {
-    font-size: 0.625em;              /* 10px */
+    font-size: 0.75em;
     color: #748494;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -104,14 +109,14 @@
 }
 
 .vas-td-chase-all {
-    font-size: 0.8125em;             /* 13px */
+    font-size: 0.75em;
     font-weight: 600;
     color: #0083DA;
 }
 
 .vas-td-header-right svg {
-    width: 0.875em;                  /* 14px */
-    height: 0.875em;
+    width: 1.15em;
+    height: 1.15em;
 }
 
 /* ── Scrollable list body ── */
@@ -125,14 +130,14 @@
 .vas-td-list-row {
     display: flex;
     align-items: center;
-    gap: 0.75em;                     /* 12px */
-    padding: 0.2em 1.125em;         /* 12px / 18px — aligns with header */
+    gap: 0.75em;
+    padding: 0.2em 1.125em;
     transition: background 0.15s;
     cursor: pointer;
 }
 
 .vas-td-list-row:not(:last-child) {
-    border-bottom: 1px solid #EDF2F6;
+    border-bottom: 0.0625em solid #EDF2F6;
 }
 
 .vas-td-list-row:hover {
@@ -141,14 +146,14 @@
 
 /* ── Avatar (cycled palette via vas-td-avatar-N classes) ── */
 .vas-td-avatar {
-    width: 2.25em;                   /* 36px */
+    width: 2.25em;
     height: 2.25em;
     border-radius: 50%;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75em;               /* 12px */
+    font-size: 0.75em;
     font-weight: 700;
     letter-spacing: 0.02em;
 }
@@ -167,7 +172,7 @@
 }
 
 .vas-td-name {
-    font-size: 0.875em;              /* 14px */
+    font-size: 0.75em;
     font-weight: 700;
     color: #102C3F;
     white-space: nowrap;
@@ -180,7 +185,7 @@
 }
 
 .vas-td-overdue-label {
-    font-size: 0.75em;               /* 12px */
+    font-size: 0.75em;
     color: #748494;
 }
 
@@ -194,7 +199,7 @@
 }
 
 .vas-td-amount {
-    font-size: 0.9375em;             /* 15px */
+    font-size: 0.75em;
     font-weight: 700;
     color: #102C3F;
     font-variant-numeric: tabular-nums;
@@ -210,9 +215,9 @@
 
 .vas-td-chip {
     display: inline-block;
-    padding: 0.1875em 0.625em;       /* 3px 10px */
-    border-radius: 999px;
-    font-size: 0.625em;              /* 10px */
+    padding: 0.1875em 0.625em;
+    border-radius: 0.75em;
+    font-size: 0.68em;
     font-weight: 700;
     white-space: nowrap;
     letter-spacing: 0.04em;
@@ -231,10 +236,11 @@
 
 /* ── Responsive: shrink the whole card by lowering its base font-size on
  *    narrow dashboard cells. Inner em sizing scales automatically. ── */
-@container (max-width: 300px) {
-    .vas-td-card { font-size: 14px; }
+@container (max-width: 18.75em) {
+    .vas-td-header { padding: 0.75em; }
 }
 
-@container (max-width: 240px) {
-    .vas-td-card { font-size: 12px; }
+@container (max-width: 15em) {
+    .vas-td-header-left,
+    .vas-td-list-row { gap: 0.45em; }
 }
