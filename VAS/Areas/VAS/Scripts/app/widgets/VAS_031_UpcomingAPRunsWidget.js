@@ -2022,10 +2022,10 @@
                         'currencyId',
                         currencies,
                         currencyId,
-                        true
+                        false
                     ),
 
-                    true
+                    false
                 ) +
 
                 fieldHtml(
@@ -2782,6 +2782,12 @@
             );
 
             if (
+                Number(payload.currencyId) === Number(
+                    firstPositiveValue(
+                        selectedInvoiceRow.currencyId,
+                        selectedInvoiceRow.cCurrencyId
+                    )
+                ) &&
                 !isNaN(maximumAmount) &&
                 maximumAmount > 0 &&
                 payload.payAmt > maximumAmount
