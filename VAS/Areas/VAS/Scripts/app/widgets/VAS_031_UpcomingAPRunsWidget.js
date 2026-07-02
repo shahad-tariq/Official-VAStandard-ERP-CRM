@@ -1875,14 +1875,12 @@
                     )
                 );
 
-            currencyId =
-                getValidLookupValue(
-                    currencies,
-                    firstPositiveValue(
-                        row.currencyId,
-                        row.cCurrencyId
-                    )
-                );
+            /*
+             * Display exactly the currency returned by
+             * GetUpcomingAPRunDetails SQL query.
+             * Do not validate, replace, or select a fallback currency.
+             */
+            currencyId = row.currencyId;
 
             bankAccountId =
                 getValidLookupValue(
@@ -2294,10 +2292,7 @@
 
                     currencyId:
                         Number(
-                            firstPositiveValue(
-                                run.currencyId,
-                                run.cCurrencyId
-                            )
+                            run.currencyId
                         )
                 },
 
